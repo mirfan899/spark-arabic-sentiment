@@ -1,0 +1,7 @@
+# curl -X POST -d '{"sentence":"التعلم الرقمي من خلال التسجيل الرقمي افتتاح الموقع قري"}' -H "Content-Type: application/json" http://0.0.0.0:5432/analyse
+POST http://0.0.0.0:5432/analyse
+Content-Type: application/json
+
+{"sentence":"التعلم الرقمي من خلال التسجيل الرقمي افتتاح الموقع قري"}
+
+###

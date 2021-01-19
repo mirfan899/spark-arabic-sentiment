@@ -49,27 +49,27 @@ class SentimentAnalyser:
         self.sc = sc
         self.sql_context = sql_context
         # Load sentiment data for later use
-        logger.info("Loading Sentiment data...")
-        sentiment_file_path = os.path.join(dataset_path, 'arabic_tweets_labeled.csv')
-        sentiment_RDD = self.sql_context.read.format('com.databricks.spark.csv').options(header=True, inferSchema='true').load(sentiment_file_path)
-        sentiment_RDD = sentiment_RDD.dropna()
-
-        tokenizer = Tokenizer(inputCol="tweet", outputCol="words")
-        hashtf = HashingTF(numFeatures=2 ** 16, inputCol="words", outputCol='tf')
-        idf = IDF(inputCol='tf', outputCol="features", minDocFreq=5)  # minDocFreq: remove sparse terms
-        label_stringIdx = StringIndexer(inputCol="target", outputCol="label")
-        pipeline = Pipeline(stages=[tokenizer, hashtf, idf, label_stringIdx])
-        sentiment_RDD.show()
-        pipelineFit = pipeline.fit(sentiment_RDD)
-        data = pipelineFit.transform(sentiment_RDD)
-        self.pipelineFit = pipelineFit
-        self.data = data
-        (train_set, test_set) = data.randomSplit([0.8, 0.2], seed=2000)
-
-        self.train_set = train_set
-        self.test_set = test_set
-
-        # Train the model
-        self.seed = 1245
-        self.iterations = 100
-        self.__train_model()
+        # logger.info("Loading Sentiment data...")
+        # sentiment_file_path = os.path.join(dataset_path, 'arabic_tweets_labeled.csv')
+        # sentiment_RDD = self.sql_context.read.format('com.databricks.spark.csv').options(header=True, inferSchema='true').load(sentiment_file_path)
+        # sentiment_RDD = sentiment_RDD.dropna()
+        #
+        # tokenizer = Tokenizer(inputCol="tweet", outputCol="words")
+        # hashtf = HashingTF(numFeatures=2 ** 16, inputCol="words", outputCol='tf')
+        # idf = IDF(inputCol='tf', outputCol="features", minDocFreq=5)  # minDocFreq: remove sparse terms
+        # label_stringIdx = StringIndexer(inputCol="target", outputCol="label")
+        # pipeline = Pipeline(stages=[tokenizer, hashtf, idf, label_stringIdx])
+        # sentiment_RDD.show()
+        # pipelineFit = pipeline.fit(sentiment_RDD)
+        # data = pipelineFit.transform(sentiment_RDD)
+        # self.pipelineFit = pipelineFit
+        # self.data = data
+        # (train_set, test_set) = data.randomSplit([0.8, 0.2], seed=2000)
+        #
+        # self.train_set = train_set
+        # self.test_set = test_set
+        #
+        # # Train the model
+        # self.seed = 1245
+        # self.iterations = 100
+        # self.__train_model()

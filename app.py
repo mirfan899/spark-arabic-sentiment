@@ -13,8 +13,9 @@ from flask import Flask, request, jsonify
 
 @main.route("/analyse", methods=["POST"])
 def analyse():
-    data = json.loads(request.data)
-
+    print(request.data)
+    data = json.loads(request.data.decode("utf8"))
+    print(data)
     if data:
         logger.debug("Analysing sentiment %s", data)
         sentiment = sentiment_analyser.get_sentiment(data["sentence"])
