@@ -41,4 +41,32 @@ If you want to test it with Pycharm you can run the `api_test.http` file
 
 ## Note
 POSTMAN has encoding issues with arabic type language such as Urdu etc so you have to use the curl or Pycharm to test it. Or
-You can integrate it with your app or website. 
+You can integrate it with your app or website.
+
+
+## Create database to store user tweets
+```python
+import findspark
+findspark.init("/home/irfan/spark")
+import pyspark as ps
+from pyspark.sql import SQLContext
+sc = ps.SparkContext('local[2]')
+sqlContext = SQLContext(sc)
+csv_file = "./user_tweets.csv"
+sqlContext.sql("CREATE DATABASE IF NOT EXISTS Sentiment;")
+sqlContext.sql("use sentiment")
+df = (sqlContext.read.format("csv")
+  .option("inferSchema", "true")
+  .option("header", "true")
+  .load(csv_file))
+
+schema="tweet varchar(512)"
+
+sqlContext.sql("use sentiment;")
+df.write.saveAsTable("user_tweets", schema=schema)
+# df.write.format("csv").saveAsTable("user_tweets", schema=schema)
+df = sqlContext.read.load("spark-warehouse/sentiment.db/user_tweets")
+df_sfo = sqlContext.sql("SELECT * FROM user_tweets")
+tbl = sqlContext.read.format("parquet").load("spark-warehouse/sentiment.db/user_tweets")
+tbl.sql_ctx.sql("INSERT INTO user_tweets  VALUES ('{}')".format('قراءة المزيد')).show()
+```
