@@ -23,16 +23,16 @@ class SentimentAnalyser:
         return self.__predict_sentiment(schema)
 
     def __train_model(self):
-        """Train the ALS model with the current dataset
+        """Train the Logistic Regression model with the current dataset
         """
-        logger.info("Training the ALS model...")
+        logger.info("Training the Logistic Regression model...")
         lr = LogisticRegression(maxIter=100)
         self.model = lr.fit(self.train_set)
         logger.info("Sentiment Model built!")
 
     def __predict_sentiment(self, schema):
-        """Gets predictions for a given (userID, movieID) formatted RDD
-        Returns: an RDD with format (movieTitle, movieRating, numRatings)
+        """Gets predictions for a given tweet formatted RDD
+        Returns: an RDD with format {"sentiment":"POSITIVE"}
         """
         test = self.pipelineFit.transform(schema)
         predict = self.model.transform(test)

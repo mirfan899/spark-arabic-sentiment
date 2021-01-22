@@ -7,7 +7,7 @@ import warnings
 from pyspark.sql import SQLContext
 try:
     # create SparkContext on all CPUs available: in my case I have 4 CPUs on my laptop
-    sc = ps.SparkContext('local[4]')
+    sc = ps.SparkContext('local[2]')
     sqlContext = SQLContext(sc)
     print("Just created a SparkContext")
 except ValueError:

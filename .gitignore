@@ -6,5 +6,4 @@ ipython_notebook_spark.out
 **/metastore_db/
 **/derby.log
 **/*.zip
-**/datasets/
 **/models/
